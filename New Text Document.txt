@@ -1,0 +1,139 @@
+// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+using namespace std;
+class Player 
+{
+private:
+    string playerName;
+    int playerID;
+    char status;
+public:
+    Player(string s= "", int n= 0, char c= 'i') {
+        playerName = s;
+        playerID = n;
+        status = c;
+
+    }
+    void setAll(string s, int n, char c) {
+        playerName = s;
+        playerID = n;
+        status = c;
+    }
+    string getPlayerName() {
+        return playerName;
+    }
+    int getPlayerID() {
+        return playerID;
+    }
+    void setStatus(char c) {
+        status = c;
+    }
+    char getStatus() {
+        return status;
+    }
+    /*void print() {
+
+    }*/
+};
+class FootballTeam {
+private:
+    Player* players;
+    int points;
+    int count;
+    int maxPlayers;
+public:
+        FootballTeam() {
+            points = 0;
+            count = 0;
+            maxPlayers = 0;
+            players = NULL;
+        }
+        FootballTeam(const FootballTeam& t) {
+            this->count = t.count;
+            this->points = t.points;
+            this->players = t.players;
+            this->maxPlayers = t.maxPlayers;
+        }
+        void updatePoints(int n) {
+            points += n;
+        }
+        int getNumberOfPoints() {
+            return points;
+        }
+        int getCount() {
+            return count;
+        }
+        void addPlayer(string s, int n, char c) {
+            if (count == maxPlayers)cout << "You exceeded the max number of players.\n";
+            Player p;
+            while (1) {
+                for (int i = 0; i < count; i++)
+                {
+                    if (n == players[i].getPlayerID()) {
+                        cout << "Please choose other ID.\n";
+                        cin >> n;
+                        continue;
+                    }
+                }
+                break;
+            }
+            p.setAll(s, n, c);
+            players[count++]=p;
+        }
+        void removePlayer(int n) {
+            for (int i = 0; i < count ; i++)
+            {
+                if (players[i].getPlayerID() == n)
+                {
+                    for (int j = i; j < count-1; j++)
+                    {
+                        players[j] = players[j + 1];
+                    }
+                    count--;
+                    return;
+                }
+            }
+            cout << "The player is not found in the players list.\n";
+        }
+        string retrievePlayerHasNumber(int n) {
+            for (int i = 0; i < count; i++)
+            {
+                if (players[i].getPlayerID() == n)
+                {
+                    return players[i].getPlayerName();
+                }
+            }
+        }
+        Player* retrievePlayers(char c) {
+            Player* p;
+            int c = 0;
+            for (int i = 0; i < count; i++)
+            {
+                if (players[i].getStatus() == c)
+                {
+                    p[c++] = players[i];
+                }
+            }
+            return p;
+        }
+        bool operator==(FootballTeam&t) {
+            if (t.count == this->count)
+            {
+                return true;
+            }
+            else return false;
+        }
+        FootballTeam moreNumberOfPoints(FootballTeam* t) {
+            if (this->points > t->points)return *this;
+            else return *t;
+        }
+        ~FootballTeam() {
+            delete[] players;
+        }
+};
+int main()
+{
+    //std::cout << "Hello World!\n";
+}
